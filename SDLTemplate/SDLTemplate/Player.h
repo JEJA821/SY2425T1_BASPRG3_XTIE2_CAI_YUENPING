@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Common.h"
 #include "draw.h"
@@ -16,5 +16,9 @@ private:
     int width;
     int height;
     SDL_Texture* texture;
+
+    float originalSpeed;
+    float increasedSpeed;
+    float currentSpeed;
 };
 

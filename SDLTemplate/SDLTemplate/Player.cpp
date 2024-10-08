@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 
 void Player::start()
 {
@@ -11,12 +11,25 @@ void Player::start()
 	width = 0;
 	height = 0;
 
+	// Set speed values
+	originalSpeed = 1.0f; // Raw speed
+	increasedSpeed = 5.0f; // Increased speed
+	currentSpeed = originalSpeed; // Current speed
+
 	//Query the texture to set our width and height
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 }
 
 void Player::update()
 {
+	// Detect key presses and adjust speed
+	if (app.keyboard[SDL_SCANCODE_LSHIFT]) {
+		currentSpeed = increasedSpeed;
+	}
+	else if (app.keyboard[SDL_SCANCODE_BACKSPACE]) {
+		currentSpeed = originalSpeed;
+	}
+
 	if (app.keyboard[SDL_SCANCODE_W])
 	{
 		y -= 1;
