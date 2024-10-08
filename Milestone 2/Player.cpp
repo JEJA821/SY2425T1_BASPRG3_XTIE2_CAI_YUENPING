@@ -12,9 +12,9 @@ void Player::start()
 	height = 0;
 
 	// Set speed values
-	originalSpeed = 1.0f; // 原始速度
-	increasedSpeed = 5.0f; // 增加的速度
-	currentSpeed = originalSpeed; // 当前速度
+	originalSpeed = 1.0f; // Raw speed
+	increasedSpeed = 5.0f; // Increased speed
+	currentSpeed = originalSpeed; // Current speed
 
 	//Query the texture to set our width and height
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
@@ -22,7 +22,7 @@ void Player::start()
 
 void Player::update()
 {
-	// 检测按键并调整速度
+	// Detect key presses and adjust speed
 	if (app.keyboard[SDL_SCANCODE_LSHIFT]) {
 		currentSpeed = increasedSpeed;
 	}
@@ -47,17 +47,18 @@ void Player::update()
 		x += 1;
 	}
 
-	// 原有移动逻辑...
+	// Original movement logic...
 
-	// 检查是否按下 G 键并发射翼端子弹
+	// Check if G is pressed and fire the wing bullet
 	if (app.keyboard[SDL_SCANCODE_G] && wingBulletCooldown <= 0)
 	{
-		// 从飞船的左翼和右翼发射子弹
+		// Fire bullets from the left and right wings of the spacecraft
 		fireWingBullets();
-		wingBulletCooldown = 50;  // 假设冷却时间为 50 帧，可以根据需要调整
+		wingBulletCooldown = 50; 
+		// Assume the cooldown time is 50 frames, you can adjust it as needed
 	}
 
-	// 递减冷却时间
+	// Decrease cooldown time
 	if (bulletCooldown > 0)
 	{
 		bulletCooldown--;
@@ -75,11 +76,11 @@ void Player::draw()
 
 void Player::fireWingBullets()
 {
-	// 发射左翼子弹
-	Bullet* leftWingBullet = new Bullet(x - width / 2, y);  // 左侧的子弹位置
+	// Fire left wing bullet
+	Bullet* leftWingBullet = new Bullet(x - width / 2, y);  // The bullet position on the left
 	Scene::getActiveScene()->addGameObject(leftWingBullet);
 
-	// 发射右翼子弹
-	Bullet* rightWingBullet = new Bullet(x + width / 2, y);  // 右侧的子弹位置
+	// Fire right wing bullet
+	Bullet* rightWingBullet = new Bullet(x + width / 2, y);  // The bullet position on the righ
 	Scene::getActiveScene()->addGameObject(rightWingBullet);
 }
