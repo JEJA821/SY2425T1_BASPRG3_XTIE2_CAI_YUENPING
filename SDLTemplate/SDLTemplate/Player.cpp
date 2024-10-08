@@ -52,3 +52,4 @@ void Player::draw()
 {
 	blit(texture, x, y);
 }
+

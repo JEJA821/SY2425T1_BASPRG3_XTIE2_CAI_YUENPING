@@ -1,9 +1,9 @@
-#include "Bullet.h"
+﻿#include "Bullet.h"
 
 Bullet: Bullet(float positioXn, float positionY, float directionX, float derectionY)
 {
 	this->x = positionX;
-	this - �y = positionY;
+	this - ›y = positionY;
 	this->directionX = directionX;
 	this->directionY = directionY;
 	this->speed = speed;
@@ -15,6 +15,7 @@ void Bullet::start()
 
 	width = 0;
 	height = 0;
+
 	SDL QueryTexture(texture, NULL, NULL, &width, &height)
 }
 
@@ -26,10 +27,30 @@ void Bullet::update()
 
 void Bullet::draw()
 {
-	blit?texture?x, y)
+	blit（texture，x, y)
 }
 
 float Bullet::getPositionX()
 {
 	return x;
+}
+
+int Bullet::getPositionY()
+{
+	return y;
+}
+
+int Bullet::getwidth()
+{
+	return width;
+}
+
+int Bullet::getHeight()
+{
+	return height;
+}
+
+Side Bullet::getSide()
+{
+	return side;
 }
