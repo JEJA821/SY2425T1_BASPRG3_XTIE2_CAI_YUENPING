@@ -12,9 +12,9 @@ void Player::start()
 	height = 0;
 
 	// Set speed values
-	originalSpeed = 1.0f; // 原始速度
-	increasedSpeed = 5.0f; // 增加的速度
-	currentSpeed = originalSpeed; // 当前速度
+	originalSpeed = 1.0f; // Raw speed
+	increasedSpeed = 5.0f; // Increased speed
+	currentSpeed = originalSpeed; // Current speed
 
 	//Query the texture to set our width and height
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
@@ -22,7 +22,7 @@ void Player::start()
 
 void Player::update()
 {
-	// 检测按键并调整速度
+	// Detect key presses and adjust speed
 	if (app.keyboard[SDL_SCANCODE_LSHIFT]) {
 		currentSpeed = increasedSpeed;
 	}
