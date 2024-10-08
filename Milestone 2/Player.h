@@ -19,8 +19,8 @@ private:
     int height;
     SDL_Texture* texture;
 
-    int bulletCooldown;           // 原始子弹冷却
-    int wingBulletCooldown;       // 翼端子弹冷却
+    int bulletCooldown;           //  Original bullet cooldown
+    int wingBulletCooldown;       // Wing tip bullet cooling
 
 private:
     float originalSpeed;
@@ -36,18 +36,18 @@ public:
     {
         x = startX;
         y = startY;
-        // 初始化子弹的其他属性
+        // Initialize other properties of the bullet
     }
 
     void update() override
     {
-        // 子弹移动逻辑
-        y -= 5;  // 假设子弹向上移动
+        //Bullet movement logic
+        y -= 5;  // Assume the bullet is moving upwards
     }
 
     void draw() override
     {
-        // 绘制子弹
+        // Draw the bullet
     }
 
 private:
