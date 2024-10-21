@@ -1,33 +1,28 @@
 ﻿#pragma once
 #include "GameObject.h"
-class Bullet :
-    public GameObject
+#include "common.h"
+#include "draw.h"
+
+class Bullet : public GameObject
 {
-public：
-    Bullet(float positionX, float PositionY, float directionX, float directionY)
+public:
+    Bullet(float PositionX, float PositionY, float directionX, float directionY, float speed);
     void start();
     void update(); 
     void draw();
-
-    int getPositionx(); 
-    int getPositionY();
-    int getwidth();
-    int getHeight();
-
-    Side getSide();
+    float getPositionX(); 
+    float getPositionY();
+    float getwidth();
+    float getHeight();
 
 private:
-    Side getSide();
-    
+    SDL_Texture* texture;
     int x; 
     int y;
     int height;
     int width;
-    
-    SDL_Texture* texture;
-    
-    float speed;
+    int speed;
     float directionX;
-    fLoat dinectionY;
+    float directionY;
 };
 
