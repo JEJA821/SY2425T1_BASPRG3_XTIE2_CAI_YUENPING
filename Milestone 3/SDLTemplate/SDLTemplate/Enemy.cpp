@@ -11,24 +11,22 @@ Enemy::~Enemy()
 
 void Enemy::start()
 {
-	texture = LoadTexture(*gfx / enemy.png*);
+	texture = loadTexture("gfx / enemy.png");
 
-	directionX =-1;
+	directionX = -1;
 	directionY = 1;
 	width = 0;
 	height = 0;
-
 	speed = 2;
-	
-	reloadtime = 60; //Reload tine of 68 franes, or 1 second
-	curentReloadTime = 0;
+	reloadTime = 60; //Reload tine of 68 franes, or 1 second
+	currentReloadTime = 0;
 
 	directionChangeTime = (rand ()%300) + 180;
 	currentDirectionChangeTime = 0;
 
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 
-	sound = SoundManager::loadSound(*sound / 334227_jradccolness__laser.ogg*);
+	sound = SoundManager::loadSound("sound / 334227_jradccolness__laser.ogg");
 	sound ->volume = 64;
 }
 
@@ -73,7 +71,7 @@ void Enemy::update()
 		{
 			// Cache the variable so we can delete it later
 			// We can't delete it after erasing from the vector(leaked pointer)
-			Bullet* bulletToErase bullets[i];
+			Bullet* bulletToErase; bullets[i];
 			bullets.erase(bullets.begin() + i);
 			delete bulletToErase;
 
@@ -84,7 +82,7 @@ void Enemy::update()
 		}
 }
 
-void Enemy::draw()
+void Enemy :: draw()
 {
 	blit(texture, x, y);
 }

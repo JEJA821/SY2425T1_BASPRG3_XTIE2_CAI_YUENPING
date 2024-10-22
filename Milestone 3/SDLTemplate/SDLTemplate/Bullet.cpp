@@ -26,10 +26,10 @@ void Bullet::update()
 	y += directionY * speed;
 }
 
-void Bullet::draw()
+void Bullet :: draw()
 {
 	blit（texture，x, y);
-};
+}
 
 float Bullet :: getPositionX()
 {

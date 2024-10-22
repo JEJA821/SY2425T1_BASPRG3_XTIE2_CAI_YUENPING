@@ -84,7 +84,7 @@ for (int i = 0; i < bullets.size(); i++)
 	{
 		// Cache the variable so we can delete it later
 		// We can't delete it after erasing from the vector(leaked pointer)
-		Bullet* bulletToErase bullets [i];
+		Bullet* bulletToErase; bullets [i];
 		bullets.erase(bullets.begin() + i);
 		delete bulletToErase;
 
@@ -95,7 +95,7 @@ for (int i = 0; i < bullets.size(); i++)
 	}
 }
 
-void Player :: draw()
+void Player::draw()
 {
 	blit(texture, x, y);
 }
