@@ -19,10 +19,15 @@ public:
     void setPlayerTarget (Player* player);
     void setPosition(int xPos, int yPos);
 
+    int getPositionX();
+    int getPositionY();
+    int getWidth();
+    int getHeight();
+
 private:
     int x;
     int y;
-    float directionx; 
+    float directionX; 
     float directionY;
     int width;
     int height;

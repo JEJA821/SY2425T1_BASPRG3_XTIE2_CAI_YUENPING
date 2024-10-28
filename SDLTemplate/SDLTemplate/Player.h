@@ -16,6 +16,11 @@ public:
 
     int getPositionX();
     int getPositionY();
+    int getWidth();
+    int getHeight();
+    bool getIsAlive(); 
+    void doDeath();
+
 private:
     int x;
     int y;
@@ -28,6 +33,7 @@ private:
     float reloadTime;
     float currentReloadTime;
     std::vector<Bullet*> bullets;
+    bool isAlive;
 
     float originalSpeed;
     float increasedSpeed;

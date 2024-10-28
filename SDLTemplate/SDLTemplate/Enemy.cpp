@@ -20,8 +20,7 @@ void Enemy::start()
 	speed = 2;
 	reloadTime = 60; //Reload tine of 68 franes, or 1 second
 	currentReloadTime = 0;
-
-	directionChangeTime = (rand ()%300) + 180;
+	directionChangeTime = (rand () % 300) + 180;
 	currentDirectionChangeTime = 0;
 
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
@@ -56,7 +55,7 @@ void Enemy::update()
 		calcSlope(playerTarget->getPositionX(), playerTarget->getPositionY(), x, y, &dx, &dy);
 
 		SoundManager::playSound(sound);
-		Bullet* bullet = new Bullet(x + width / 2, y - 2 + height / 2, dx, dy, 10);
+		Bullet* bullet = new Bullet(x + width / 2, y - 2 + height / 2, dx, dy, 10, Side::ENEMY_SIDE);
 		bullets.push_back(bullet);
 		getScene()->addGameObject(bullet);
 
@@ -71,7 +70,7 @@ void Enemy::update()
 		{
 			// Cache the variable so we can delete it later
 			// We can't delete it after erasing from the vector(leaked pointer)
-			Bullet* bulletToErase; bullets[i];
+			Bullet* bulletToErase = bullets[i];
 			bullets.erase(bullets.begin() + i);
 			delete bulletToErase;
 
@@ -80,6 +79,7 @@ void Enemy::update()
 			// We can also avoid lag this way
 			break;
 		}
+	}
 }
 
 void Enemy :: draw()
@@ -96,4 +96,24 @@ void Enemy::setPosition(int xPos, int yPos)
 {
 	this->x = xPos;
 	this->y = yPos;
+}
+
+int Enemy::getPositionX()
+{
+	return x;
+}
+
+int Enemy::getPositionY()
+{
+	return y;
+}
+
+int Enemy::getWidth()
+{
+	return width;
+}
+
+int Enemy::getHeight()
+{
+	return height;
 }

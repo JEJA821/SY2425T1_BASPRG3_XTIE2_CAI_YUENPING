@@ -24,6 +24,7 @@ void Player::start()
 	speed = 2;
 	reloadTime = 8; // Reload time8 frames, or 0.13 seconds
 	currentReloadTime = 0;
+	isAlive = true;
 
 	// Set speed values
 	originalSpeed = 1.0f; // Raw speed
@@ -69,7 +70,7 @@ void Player::update()
 	if (app.keyboard[SDL_SCANCODE_F] && currentReloadTime == 0)
 	{
 		SoundManager::playSound(sound);
-		Bullet* bullet = new Bullet(x + width / 2, y - 2 + height / 2, 1, 0, 10);
+		Bullet* bullet = new Bullet(x + width, y - 2 + height / 2, 1, 0, 10, Side::PLAYER_SIDE);
 		bullets.push_back(bullet);
 		getScene()->addGameObject(bullet);
 
@@ -77,36 +78,58 @@ void Player::update()
 		currentReloadTime = reloadTime;
 	}
 
-// Memory manage our bullets. When they go off screen, delete them
-for (int i = 0; i < bullets.size(); i++)
-{
-	if (bullets[i]->getPositionX() > SCREEN_WIDTH)
+	// Memory manage our bullets. When they go off screen, delete them
+	for (int i = 0; i < bullets.size(); i++)
 	{
-		// Cache the variable so we can delete it later
-		// We can't delete it after erasing from the vector(leaked pointer)
-		Bullet* bulletToErase; bullets [i];
-		bullets.erase(bullets.begin() + i);
-		delete bulletToErase;
+		if (bullets[i]->getPositionX() > SCREEN_WIDTH)
+		{
+			// Cache the variable so we can delete it later
+			// We can't delete it after erasing from the vector(leaked pointer)
+			Bullet* bulletToErase = bullets[i];
+			bullets.erase(bullets.begin() + i);
+			delete bulletToErase;
 
-		// We can't mutate (change) our vector while looping inside it
-        // this might crash on the next 100p iteration
-		// We can also avoid lag this way
-		break;
+			// We can't mutate (change) our vector while looping inside it
+			// this might crash on the next 100p iteration
+			// We can also avoid lag this way
+			break;
+		}
 	}
 }
 
 void Player::draw()
 {
+	if (isAlive) return; 
 	blit(texture, x, y);
 }
 
 int Player::getPositionX()
 {
-	return X;
+	return x;
 }
 
 int Player::getPositionY()
 {
-	return Y;
+	return y;
+}
+
+int Player::getWidth()
+{
+	return width;
+}
+
+int Player::getHeight()
+{
+	return height;
+}
+
+bool Player::getIsAlive()
+{
+	return isAlive;
+}
+
+void Player::doDeath()
+{
+	isAlive = false;
 }
 
