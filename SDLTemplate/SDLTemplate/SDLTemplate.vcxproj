@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="config.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="Enemy.h" />

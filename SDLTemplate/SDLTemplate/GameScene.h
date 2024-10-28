@@ -35,5 +35,9 @@ private:
 	SDL_Texture* explosionTexture; // Texture for explosion
 	int explosionX, explosionY;    // Position of explosion
 	int explosionTimer;            // Timer to control duration
-};
 
+	int powerUpX, powerUpY; 
+	bool powerUpActive; 
+	int powerUpTimer; 
+	int firingLevel;
+};

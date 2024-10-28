@@ -34,6 +34,8 @@ void Player::start()
 	//Query the texture to set our width and height
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 	sound = SoundManager::loadSound("sound/334227__jradcoolness__laser.ogg");
+
+	firingLevel = 1;  // The initial emission level is 1
 }
 
 void Player::update()
@@ -70,7 +72,7 @@ void Player::update()
 	if (app.keyboard[SDL_SCANCODE_F] && currentReloadTime == 0)
 	{
 		SoundManager::playSound(sound);
-		Bullet* bullet = new Bullet(x + width, y - 2 + height / 2, 1, 0, 10, Side::PLAYER_SIDE);
+		Bullet* bullet = new Bullet(x + width / 2, y, 0, -1, 10, Side::PLAYER_SIDE);
 		bullets.push_back(bullet);
 		getScene()->addGameObject(bullet);
 
@@ -95,6 +97,12 @@ void Player::update()
 			break;
 		}
 	}
+
+	// Add boundary checks if necessary to prevent going out of screen
+	if (y < 0) y = 0;
+	if (y + height > SCREEN_HEIGHT) y = SCREEN_HEIGHT - height;
+	if (x < 0) x = 0;
+	if (x + width > SCREEN_WIDTH) x = SCREEN_WIDTH - width;
 }
 
 void Player::draw()
@@ -131,5 +139,24 @@ bool Player::getIsAlive()
 void Player::doDeath()
 {
 	isAlive = false;
+	// Clear the bullets
+	for (Bullet* bullet : bullets) {
+		delete bullet;
+	}
+	bullets.clear();
 }
 
+void Player::increaseFiringLevel() {
+	firingLevel++;  // Increase the emission level
+}
+
+void Player::fire() {
+	int offset = 15;  // Bullet spacing
+	for (int i = 0; i < firingLevel; i++) {
+		int bulletX = x + (i - firingLevel / 2) * offset;  // Adjust the bullet position according to the firing level
+		Bullet* bullet = new Bullet(bulletX, y, 0, -1, 10, Side::PLAYER_SIDE);  // Launch up
+		bullets.push_back(bullet);
+		getScene()->addGameObject(bullet);
+	}
+	SoundManager::playSound(sound);
+}

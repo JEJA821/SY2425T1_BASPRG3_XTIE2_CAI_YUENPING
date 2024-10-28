@@ -7,6 +7,8 @@ GameScene::GameScene()
 	this->addGameObject(player);
 
 	points = 0;
+	powerUpActive = false; 
+	firingLevel = 1;
 }
 
 GameScene::~GameScene()
@@ -33,6 +35,8 @@ void GameScene::start()
 	backgroundTexture = loadTexture("gfx/background.png");
 	explosionTexture = loadTexture("gfx/explosion.png");
 	explosionTimer = 0; // No explosion initially
+
+	powerUpTimer = 0; // No power-up initially
 }
 
 void GameScene::draw()
@@ -56,6 +60,12 @@ void GameScene::draw()
 		blit(explosionTexture, explosionX, explosionY);
 		explosionTimer--; // Countdown explosion timer
 	}
+
+	if (powerUpActive)
+	{
+		// Draw Power-Up, assuming there is a function loadTexture and blit
+		blit(loadTexture("gfx/powerup.png"), powerUpX, powerUpY);
+	}
 }
 
 void GameScene::update()
@@ -64,6 +74,34 @@ void GameScene::update()
 
 	doSpawnLogic(); 
 	doCollisionLogic();
+
+	// Generates the Power-Up logic
+	if (!powerUpActive && rand() % 100 < 2) // 2% probability of generating a Power-Up
+	{
+		powerUpX = rand() % (SCREEN_WIDTH - 50);  // Random horizontal position
+		powerUpY = 0;  // Generated at the top
+		powerUpActive = true;  // Activate Power-Up
+	}
+
+	if (powerUpActive)
+	{
+		powerUpY += 2;  // Power-Up Moves down
+
+		// Check whether the Power-Up crosses the bottom of the screen
+		if (powerUpY > SCREEN_HEIGHT)
+		{
+			powerUpActive = false;  // Power-Up disappears
+		}
+
+		// Check if the player has collected a Power-Up
+		if (checkCollision(player->getPositionX(), player->getPositionY(), player->getWidth(), player->getHeight(),
+			powerUpX, powerUpY, 50, 50)) // Assume that the Power-Up size is 50x50
+		{
+			powerUpActive = false;  // Power-Up is collected
+			firingLevel++;  // Increase the emission level
+			player->increaseFiringLevel();  // Upgrade the launch level
+		}
+	}
 }
 
 void GameScene::doSpawnLogic()
@@ -135,7 +173,8 @@ void GameScene::spawn()
 	this->addGameObject(enemy);
 	enemy->setPlayerTarget(player);
 
-	enemy->setPosition(1200, 300 + (rand() % 300));
+	enemy->setPosition(rand() % (SCREEN_WIDTH - enemy->getWidth()), 0);
+	addGameObject(enemy);
 	spawnedEnemies.push_back(enemy);
 	currentSpawnTimer = spawnTime;
 }
@@ -169,3 +208,4 @@ void GameScene::despawnEnemy(Enemy* enemy)
 		delete enemy;
 	}
 }
+

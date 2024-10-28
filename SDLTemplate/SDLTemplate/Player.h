@@ -21,6 +21,9 @@ public:
     bool getIsAlive(); 
     void doDeath();
 
+    void increaseFiringLevel();  // Added method to increase the emission level
+    void fire();
+
 private:
     int x;
     int y;
@@ -38,5 +41,7 @@ private:
     float originalSpeed;
     float increasedSpeed;
     float currentSpeed;
+
+    int firingLevel;  // Current emission level
 };
 
