@@ -40,4 +40,13 @@ private:
 	bool powerUpActive; 
 	int powerUpTimer; 
 	int firingLevel;
+
+	int bossSpawnThreshold = 20;  // For example, a Boss is generated when the score reaches 20
+	bool isBossActive = false;
+	Enemy* bossEnemy = nullptr;  // Pointer to Boss
+	float bossPatternSwitchTimer;  // Control Boss shooting and movement modes
+
+	void spawnBoss();  // Generate a Boss
+	void updateBossLogic();  // Update the Boss logic
+	void resetAfterBossDefeat();  // Reset operation after Boss defeat
 };

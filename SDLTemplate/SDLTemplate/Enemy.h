@@ -24,6 +24,15 @@ public:
     int getWidth();
     int getHeight();
 
+    void switchPattern();
+    void setIsBoss(bool isBoss);
+    void setHealth(int hp);
+    void setFiringRate(int rate);
+    bool isDefeated() const;
+    bool getIsBoss() const;
+
+    void fire();
+
 private:
     int x;
     int y;
@@ -41,5 +50,10 @@ private:
     float directionChangeTime; 
     float currentDirectionChangeTime;
     std::vector<Bullet*> bullets;
+
+    bool isBoss;
+    int health;
+    int firingRate;
+    int firingPattern;
 };
 

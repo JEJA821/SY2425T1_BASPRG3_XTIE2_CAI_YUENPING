@@ -80,6 +80,25 @@ void Enemy::update()
 			break;
 		}
 	}
+
+	if (isBoss) {
+		if (firingPattern == 0) {
+			x += (sin(y / 50.0) * 5); // Swing from side to side
+		}
+		else if (firingPattern == 1) {
+			y += speed;   // Move down
+		}
+	}
+	else {
+		// Conventional enemy logic
+	}
+
+	if (currentReloadTime > 0) currentReloadTime--;
+
+	if (currentReloadTime == 0) {
+		fire();  // Both bosses and normal enemies execute firing logic
+		currentReloadTime = reloadTime;
+	}
 }
 
 void Enemy :: draw()
@@ -116,4 +135,53 @@ int Enemy::getWidth()
 int Enemy::getHeight()
 {
 	return height;
+}
+
+void Enemy::switchPattern() {
+	firingPattern = (firingPattern + 1) % 3;  // Switch mode
+}
+
+void Enemy::fire() {
+	if (isBoss) {
+		if (firingPattern == 0) {
+			// Single rapid fire
+			Bullet* bullet = new Bullet(x, y + height, 0, 1, 10, Side::ENEMY_SIDE);
+			bullets.push_back(bullet);
+			getScene()->addGameObject(bullet);
+		}
+		else if (firingPattern == 1) {
+			// Fan three hair
+			Bullet* bullet1 = new Bullet(x - 15, y + height, -1, 1, 10, Side::ENEMY_SIDE);
+			Bullet* bullet2 = new Bullet(x, y + height, 0, 1, 10, Side::ENEMY_SIDE);
+			Bullet* bullet3 = new Bullet(x + 15, y + height, 1, 1, 10, Side::ENEMY_SIDE);
+			bullets.push_back(bullet1);
+			bullets.push_back(bullet2);
+			bullets.push_back(bullet3);
+			getScene()->addGameObject(bullet1);
+			getScene()->addGameObject(bullet2);
+			getScene()->addGameObject(bullet3);
+		}
+	}
+	else {
+		// Common enemy firing logic
+		Bullet* bullet = new Bullet(x, y + height, 0, 1, 10, Side::ENEMY_SIDE);
+		bullets.push_back(bullet);
+		getScene()->addGameObject(bullet);
+	}
+}
+
+void Enemy::setFiringRate(int rate) {
+	firingRate = rate;
+}
+
+void Enemy::setHealth(int hp) {
+	health = hp;
+}
+
+void Enemy::setIsBoss(bool isBoss) {
+	this->isBoss = isBoss;
+}
+
+bool Enemy::getIsBoss() const {
+	return isBoss;
 }

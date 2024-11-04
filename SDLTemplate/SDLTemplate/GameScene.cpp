@@ -9,6 +9,11 @@ GameScene::GameScene()
 	points = 0;
 	powerUpActive = false; 
 	firingLevel = 1;
+
+	for (Enemy* enemy : spawnedEnemies) {
+		delete enemy;
+	}
+	spawnedEnemies.clear();
 }
 
 GameScene::~GameScene()
@@ -66,6 +71,17 @@ void GameScene::draw()
 		// Draw Power-Up, assuming there is a function loadTexture and blit
 		blit(loadTexture("gfx/powerup.png"), powerUpX, powerUpY);
 	}
+
+	for (Enemy* enemy : spawnedEnemies) {
+		if (enemy->getIsBoss()) {
+			// Draw the Boss
+			SDL_Texture* bossTexture = loadTexture("gfx/boss.png");
+			blit(bossTexture, enemy->getPositionX(), enemy->getPositionY());
+		}
+		else {
+			enemy->draw();
+		}
+	}
 }
 
 void GameScene::update()
@@ -101,6 +117,17 @@ void GameScene::update()
 			firingLevel++;  // Increase the emission level
 			player->increaseFiringLevel();  // Upgrade the launch level
 		}
+	}
+
+	if (points >= bossSpawnThreshold && !isBossActive) {
+		spawnBoss();
+	}
+
+	if (isBossActive) {
+		updateBossLogic();
+	}
+	else {
+		doSpawnLogic();
 	}
 }
 
@@ -209,3 +236,32 @@ void GameScene::despawnEnemy(Enemy* enemy)
 	}
 }
 
+void GameScene::spawnBoss() {
+	isBossActive = true;
+	bossEnemy = new Enemy();
+	bossEnemy->setHealth(100);  // Set the Boss's high health
+	bossEnemy->setFiringRate(5);  // Set the Boss to shoot faster
+	bossEnemy->setPosition(SCREEN_WIDTH / 2, 50);  // Top center of the screen
+	bossEnemy->setIsBoss(true);
+	spawnedEnemies.push_back(bossEnemy);  // Join the scene
+	bossPatternSwitchTimer = 200;  // Mode switching interval
+}
+
+void GameScene::updateBossLogic() {
+	if (bossPatternSwitchTimer-- <= 0) {
+		// Switch modes each time
+		bossEnemy->switchPattern();
+		bossPatternSwitchTimer = 200;  // Reset the switch timer
+	}
+
+	if (bossEnemy->isDefeated()) {
+		despawnEnemy(bossEnemy);
+		resetAfterBossDefeat();
+	}
+}
+
+void GameScene::resetAfterBossDefeat() {
+	isBossActive = false;
+	bossEnemy = nullptr;
+	points = 0;  // or reset points by other means
+}
