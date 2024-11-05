@@ -69,13 +69,13 @@ void GameScene::draw()
 	if (powerUpActive)
 	{
 		// Draw Power-Up, assuming there is a function loadTexture and blit
-		blit(loadTexture("gfx/powerup.png"), powerUpX, powerUpY);
+		blit(loadTexture("gfx/playerBullet.png"), powerUpX, powerUpY);
 	}
 
 	for (Enemy* enemy : spawnedEnemies) {
 		if (enemy->getIsBoss()) {
 			// Draw the Boss
-			SDL_Texture* bossTexture = loadTexture("gfx/boss.png");
+			SDL_Texture* bossTexture = loadTexture("gfx/enemy.png");
 			blit(bossTexture, enemy->getPositionX(), enemy->getPositionY());
 		}
 		else {
@@ -200,7 +200,7 @@ void GameScene::spawn()
 	this->addGameObject(enemy);
 	enemy->setPlayerTarget(player);
 
-	enemy->setPosition(rand() % (SCREEN_WIDTH - enemy->getWidth()), 0);
+	enemy->setPosition(rand() % (SCREEN_WIDTH - enemy->getWidth()), SCREEN_HEIGHT/2);
 	addGameObject(enemy);
 	spawnedEnemies.push_back(enemy);
 	currentSpawnTimer = spawnTime;

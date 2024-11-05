@@ -11,7 +11,7 @@ Enemy::~Enemy()
 
 void Enemy::start()
 {
-	texture = loadTexture("gfx / enemy.png");
+	texture = loadTexture("gfx/enemy.png");
 
 	directionX = -1;
 	directionY = 1;
@@ -25,8 +25,8 @@ void Enemy::start()
 
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 
-	sound = SoundManager::loadSound("sound / 334227_jradccolness__laser.ogg");
-	sound ->volume = 64;
+	sound = SoundManager::loadSound("sound/334227__jradcoolness__laser.ogg");
+	sound->volume = 64;
 }
 
 
@@ -172,6 +172,11 @@ void Enemy::fire() {
 
 void Enemy::setFiringRate(int rate) {
 	firingRate = rate;
+}
+
+bool Enemy::isDefeated()
+{
+	return health <= 0;
 }
 
 void Enemy::setHealth(int hp) {

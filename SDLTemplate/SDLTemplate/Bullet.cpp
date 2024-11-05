@@ -26,7 +26,7 @@ void Bullet::start()
 
 	x = 0;
 	y = 0;
-    texture = loadTexture("gfx / playerBulLet.png");
+    texture = loadTexture("gfx/playerBulLet.png");
 
 	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
 
