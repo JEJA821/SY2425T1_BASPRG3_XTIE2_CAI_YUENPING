@@ -28,7 +28,7 @@ public:
     void setIsBoss(bool isBoss);
     void setHealth(int hp);
     void setFiringRate(int rate);
-    bool isDefeated() const;
+    bool isDefeated();
     bool getIsBoss() const;
 
     void fire();
