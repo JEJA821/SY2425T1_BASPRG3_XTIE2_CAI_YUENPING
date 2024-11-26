@@ -51,14 +51,18 @@ void GameScene::draw()
 	drawText(10, 10, 255, 255, 255, TEXT_LEFT, "Score: %d", score);
 	drawText(10, 30, 255, 255, 255, TEXT_LEFT, "Level: %d", level);
 
+	drawTutorial();
+
+	drawText(SCREEN_WIDTH - 150, 10, 255, 255, 255, TEXT_LEFT, "Score: %d", score);
+
 	// Display the game status prompt
 	if (isLevelCompleted)
 	{
-		drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 20, 0, 255, 0, TEXT_CENTER, "Level Complete!");
+		drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0, 255, 0, TEXT_CENTER, "Level Complete!");
 	}
 	else if (isGameOver)
 	{
-		drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 20, 255, 0, 0, TEXT_CENTER, "GAME OVER");
+		drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 255, 0, 0, TEXT_CENTER, "GAME OVER");
 	}
 }
 
@@ -72,7 +76,7 @@ void GameScene::update()
 		// Game end logic
 		SoundManager::playSound("sounds/game_over.wav");
 		Mix_HaltMusic();   // Stop background music
-		SDL_Delay(2000);   // The "GAME OVER" screen is displayed after a delay of 2 seconds
+		SDL_Delay(5000);   // The "GAME OVER" screen is displayed after a delay of 2 seconds
 		SDL_Quit();        // Disable SDL
 		exit(0);           // Exit the program
 	}
@@ -84,7 +88,7 @@ void GameScene::update()
 		presentScene();
 		// Level completion logic
 		Mix_HaltMusic();   // Stop background music
-		SDL_Delay(2000);   // The "Level Complete" screen is displayed after a delay of 2 seconds
+		SDL_Delay(5000);   // The "Level Complete" screen is displayed after a delay of 2 seconds
 		Scene::setActiveScene(new GameScene(level + 1));  // Proceed to the next level
 		delete this;   // Delete the current level object
 		return;
@@ -140,4 +144,9 @@ void GameScene::update()
 	{
 		isLevelCompleted = true;
 	}
+}
+
+void GameScene::drawTutorial()
+{
+	drawText(10, SCREEN_HEIGHT - 20, 255, 255, 255, TEXT_LEFT, "Use LEFT and RIGHT arrows to move. Avoid obstacles!");
 }

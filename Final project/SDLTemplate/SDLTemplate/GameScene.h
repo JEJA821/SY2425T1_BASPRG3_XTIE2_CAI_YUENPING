@@ -33,4 +33,6 @@ private:
 
     // Background
     SDL_Texture* backgroundTexture; // Background texture
+
+    void drawTutorial();
 };
