@@ -1,4 +1,6 @@
 #include "main.h"
+#include "init.h"
+#include "text.h"
 
 static void capFrameRate(long* then, float* remainder);
 
@@ -14,6 +16,8 @@ int main(int argc, char* argv[])
 
 	// Initialize SDL and open a window
 	initSDL();
+	//×Ô¼º
+	initFonts();
 	// On application exit, call cleanup function
 	atexit(cleanup);
 
