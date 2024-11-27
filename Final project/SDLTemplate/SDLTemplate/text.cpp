@@ -18,10 +18,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#define GLYPH_WIDTH 50    // 每个字符的宽度（根据图片调整）
-#define GLYPH_HEIGHT 55   // 每个字符的高度（根据图片调整）
-#define CHAR_SPACING 14.2      // 每个字符之间的间距
-#define CHARS_PER_ROW 36 // 每行的字符数
+#define GLYPH_WIDTH 50 // The width of each character (adjust according to the image)
+#define GLYPH_HEIGHT 55 // The height of each character (adjust according to the image)
+#define CHAR_SPACING 14.2 // The spacing between each character
+#define CHARS_PER_ROW 36 // Number of characters per row
 #include "text.h"
 
 static SDL_Texture* fontTexture;
@@ -75,27 +75,27 @@ void drawText(int x, int y, int r, int g, int b, int align, const  char* format,
 
 		if (c == ' ')
 		{
-			x += GLYPH_WIDTH; // 跳过绘制，直接移动光标
+			x += GLYPH_WIDTH;  // Skip drawing and move the cursor directly
 			continue;
 		}
 
-		// 映射 A-Z
+		// Map A-Z
 		if (c >= 'A' && c <= 'Z')
 		{
 			index = c - 'A';
 		}
-		// 映射 0-9
+		// Mapping 0-9
 		else if (c >= '0' && c <= '9')
 		{
-			index = 26 + (c - '0'); // 0-9 的索引从 26 开始
+			index = 26 + (c - '0');  // The index of 0-9 starts at 26
 		}
 
 		if (index != -1)
 		{
-			rect.x = index * (GLYPH_WIDTH + CHAR_SPACING); // x 坐标为字符索引 * 字符宽度
+			rect.x = index * (GLYPH_WIDTH + CHAR_SPACING);  // x coordinates are character index * character width
 
-			blitRect(fontTexture, &rect, x, y); // 绘制字符
-			x += GLYPH_WIDTH + CHAR_SPACING; // 更新下一个字符的绘制位置
+			blitRect(fontTexture, &rect, x, y);  // Draw characters
+			x += GLYPH_WIDTH + CHAR_SPACING;  // Update the drawing position of the next character
 		}
 	}
 }

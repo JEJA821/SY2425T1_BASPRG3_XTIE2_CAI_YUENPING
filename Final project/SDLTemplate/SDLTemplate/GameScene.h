@@ -30,6 +30,8 @@ private:
     int level;              // Current level
     int obstacleSpeed;      // Speed of the obstacles
     int score;              // Player's score
+    int lastLevelScore;     // Score at the last level completion
+    int levelCompleteTimer; // Timer to control the "LEVEL COMPLETE" display duration
 
     // Background
     SDL_Texture* backgroundTexture; // Background texture
